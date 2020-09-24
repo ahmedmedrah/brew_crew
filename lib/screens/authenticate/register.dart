@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:rew_crew/services/auth.dart';
 import 'package:rew_crew/shared/constants.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -32,10 +32,10 @@ class _SignInState extends State<SignIn> {
               widget.toggleView();
             },
             icon: Icon(Icons.person),
-            label: Text('Register')
+            label: Text('Sign In')
           )
         ],
-        title: Text('Sign In to Brew Crew'),
+        title: Text('Sign Up to Brew Crew'),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20,horizontal: 50),
@@ -48,32 +48,38 @@ class _SignInState extends State<SignIn> {
                 decoration: textInputDecoration.copyWith(hintText:'Email'),
                 validator: (val)=> val.isEmpty ? 'Enter an Email' : null,
                 onChanged: (val) {
-                  setState(() => email = val);
+                  setState(() {
+                    email = val;
+                  });
                 },
               ),
               SizedBox(height: 20,),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText:'Password'),
-                validator: (val)=> val.length < 6 ? 'Enter a Password 6+ chars long' : null,
                 obscureText: true,
+                validator: (val)=> val.length < 6 ? 'Enter a Password 6+ chars long' : null,
                 onChanged: (val) {
-                  setState(() => pass = val);
+                  setState(() {
+                    pass = val;
+                  });
                 },
               ),
               SizedBox(height:20),
               RaisedButton(
                 color: Colors.pink[400],
                 child: Text(
-                  'Sign in',
+                  'Register',
                   style: TextStyle(
                     color: Colors.white
                   ),
                 ),
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
-                    dynamic result = await _auth.signInWithEmailAndPassword(email, pass);
+                    dynamic result = await _auth.registerWithEmailAndPassword(email, pass);
                     if(result == null){
-                      setState(() => error = "couldn't sign in with this credentials");
+                      setState(() {
+                        error = 'please supply a valid info';
+                      });
                     }
                   }
                 },
