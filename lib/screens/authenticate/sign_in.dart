@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rew_crew/services/auth.dart';
 import 'package:rew_crew/shared/constants.dart';
+import 'package:rew_crew/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -18,19 +19,18 @@ class _SignInState extends State<SignIn> {
   String email = '';
   String pass = '';
   String error = '';
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold( // show the loading screen if loading is true
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0,
         actions: [
           FlatButton.icon(
-            onPressed: (){
-              widget.toggleView();
-            },
+            onPressed: ()=> widget.toggleView(),
             icon: Icon(Icons.person),
             label: Text('Register')
           )
@@ -71,9 +71,13 @@ class _SignInState extends State<SignIn> {
                 ),
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
+                    setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, pass);
                     if(result == null){
-                      setState(() => error = "couldn't sign in with this credentials");
+                      setState(() {
+                        loading = false;
+                        return error = "couldn't sign in with this credentials";
+                      });
                     }
                   }
                 },
