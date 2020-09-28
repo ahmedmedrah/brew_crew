@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rew_crew/models/brew.dart';
+import 'package:rew_crew/models/user_model.dart';
 
 class DatabaseService{
 
@@ -18,11 +19,11 @@ class DatabaseService{
 
   //get brews stream
   Stream<List<BrewModel>> get brews{
-    return brewCollection.snapshots().map(_brewListFromSnapshop);
+    return brewCollection.snapshots().map(_brewListFromSnapshot);
   }
 
   //brewlist for snapshot
-  List<BrewModel> _brewListFromSnapshop(QuerySnapshot snapshot){
+  List<BrewModel> _brewListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((e) {
       return BrewModel(
         name: e.data()['name'].toString() ?? '',
@@ -30,6 +31,20 @@ class DatabaseService{
         strength: e.data()['strength'] ?? 0
       );
     }).toList();
+  }
 
+  //user date from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
+    return UserData(
+      uid: uid, 
+      name: snapshot.data()['name'],
+      sugars: snapshot.data()['sugars'],
+      strength: snapshot.data()['strength'],
+    );
+  }
+
+  //get user doc stream
+  Stream<UserData> get userData{
+    return brewCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rew_crew/models/brew.dart';
+import 'package:rew_crew/screens/home/setting_form.dart';
 import 'package:rew_crew/services/auth.dart';
 import 'package:rew_crew/services/database.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class Home extends StatelessWidget {
         builder: (context){
           return Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-            child: Text('bottom sheet'),
+            child: SettingForm(),
           );
         });
     }
@@ -45,7 +46,15 @@ class Home extends StatelessWidget {
             )
           ],
         ),
-        body: BrewList(),
+        body: Container(          
+          child: BrewList(),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/coffee_bg.png'),
+              fit: BoxFit.cover
+            ),
+          ),
+        ),
       ),
     );
   }
