@@ -1,4 +1,4 @@
-# rew_crew
+# brew_crew
 
 ![Alt text](screenshots/1.png?raw=true "Login")
 ![Alt text](screenshots/2.png?raw=true "Home")
