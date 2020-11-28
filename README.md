@@ -1,5 +1,9 @@
 # rew_crew
 
+![Alt text](screenshots/1.png?raw=true "Login")
+![Alt text](screenshots/2.png?raw=true "Home")
+![Alt text](screenshots/3.png?raw=true "Settings")
+
 A new Flutter project using firebase auth and firebase firestore.
 
 ## Getting Started
