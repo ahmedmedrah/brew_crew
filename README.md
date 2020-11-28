@@ -1,6 +1,6 @@
 # rew_crew
 
-A new Flutter project.
+A new Flutter project using firebase auth and firebase firestore.
 
 ## Getting Started
 
